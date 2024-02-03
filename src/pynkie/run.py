@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import NoReturn
 import pygame as pg
 from time import time
 
@@ -20,7 +21,7 @@ class Pynkie:
     debug_info: bool = False
     use_default_cursor: bool = True
 
-    def run(self):
+    def run(self) -> None:
         # setup mouse
         pg.mouse.set_visible(self.use_default_cursor)
 
@@ -32,9 +33,9 @@ class Pynkie:
         self.main_loop(display, clock)
 
 
-    def main_loop(self, display: pg.Surface, clock: pg.time.Clock):
-        prev_time = time()
-        dt = 0  # delta time [s]
+    def main_loop(self, display: pg.Surface, clock: pg.time.Clock) -> NoReturn:
+        prev_time: float = time()
+        dt: float = 0.  # delta time [s]
         while True:
             # handle events
             # update the state of elements based on events/player triggers
@@ -58,8 +59,8 @@ class Pynkie:
             clock.tick(self.max_framerate)
             
             # delta time
-            now = time()
-            dt = now - prev_time
+            now: float = time()
+            dt: float = now - prev_time
             prev_time = now
             if self.debug_info:
                 debug.debug["DT"] = dt

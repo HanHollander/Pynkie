@@ -1,0 +1,3 @@
+import pygame as pg
+
+def setup_screen(width: int, heigth: int) -> pg.Surface: ...

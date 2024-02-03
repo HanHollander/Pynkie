@@ -1,0 +1,29 @@
+import pygame as pg
+from _typeshed import Incomplete as Incomplete
+from pynkie.events import EventListener as EventListener
+from typing import Any
+
+class View(pg.sprite.Group[Any], EventListener):
+    def __init__(self) -> None: ...
+
+class Viewport:
+    camera: Incomplete
+    screen_size: Incomplete
+    def __init__(self, camera: pg.Rect, screen_size: pg.Vector2) -> None: ...
+
+class ScaledView(View):
+    viewport: Incomplete
+    scale: int
+    minimum_dimensions: Incomplete
+    background: Incomplete
+    view_surface: Incomplete
+    center_element: Incomplete
+    def __init__(self, viewport: Viewport) -> None: ...
+    def on_window_resize(self, event: pg.event.Event) -> None: ...
+    def on_key_down(self, event: pg.event.Event) -> None: ...
+    def center_camera(self) -> None: ...
+    def update_viewport(self, new_viewport: Viewport) -> None: ...
+    def draw(self, surface: pg.Surface, *args: Any) -> list[pg.Rect]: ...
+
+class StaticView(View):
+    def __init__(self) -> None: ...
