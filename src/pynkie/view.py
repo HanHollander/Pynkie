@@ -37,9 +37,9 @@ class ScaledView(View):
         self.update_viewport(viewport)
 
     def on_window_resize(self, event: pg.event.Event) -> None:
-        self._recalculate_window_dimensions(pg.Vector2(event.w, event.h))
+        self.recalculate_window_dimensions(pg.Vector2(event.w, event.h))
     
-    def _recalculate_window_dimensions(self, size: pg.Vector2) -> None:
+    def recalculate_window_dimensions(self, size: pg.Vector2) -> None:
         pref_ratio: float = self.minimum_dimensions.x / self.minimum_dimensions.y
         new_window_ratio: float = size.x / size.y
 
@@ -58,10 +58,10 @@ class ScaledView(View):
     def on_key_down(self, event: pg.event.Event) -> None:
         if event.key == pg.K_MINUS:
             self.scale += 0.1
-            self._recalculate_window_dimensions(self.viewport.screen_size)
+            self.recalculate_window_dimensions(self.viewport.screen_size)
         elif event.key == pg.K_EQUALS:
             self.scale: float = max(0.1, self.scale - 0.1)
-            self._recalculate_window_dimensions(self.viewport.screen_size)
+            self.recalculate_window_dimensions(self.viewport.screen_size)
 
     def center_camera(self) -> None:
         if self.center_element is not None:

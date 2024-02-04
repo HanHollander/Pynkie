@@ -12,9 +12,8 @@ Generate type stubs
 ```bash
 stubgen src/pynkie -o stubs
 ```
-Note 1: Most likely the `__init()__` methods of classes annotated with `@dataclass` has to be manually deleted in the generated .pyi files
+Note: some manual tweaks may be needed
 
-Note 2: the `__init__.py` file should be manually copied to `__init__.pyi` for typing (mypy, pyright etc.) to work
 
 ## Build
 
