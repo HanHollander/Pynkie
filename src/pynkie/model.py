@@ -5,5 +5,5 @@ class Model(EventListener):
     def __init__(self) -> None:
         pass
 
-    def update(dt: float):
+    def update(self, dt: float) -> None:
         pass

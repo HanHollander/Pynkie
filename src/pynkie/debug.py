@@ -1,13 +1,15 @@
+from typing import Any
 import pygame as pg
 
-font_size = 16
-font = pg.font.Font(None, font_size)
+font_size: int = 16
+font: pg.font.Font = pg.font.Font(None, font_size)
+antialias: bool = font_size >= 10
 
-debug = {}
-x = 0
-y0 = 0
+debug: dict[str, Any] = {}
+x: int = 0
+y0: int = 0
 
-def fmt(v) -> str:
+def fmt(v: Any) -> str:
     if isinstance(v, float):
         return "{:.3f}".format(v)
     elif isinstance(v, tuple) or isinstance(v, list) or isinstance(v, pg.Vector2):
@@ -15,8 +17,8 @@ def fmt(v) -> str:
     else:
         return str(v)
     
-def fmt_listlike(l) -> str:
-    f = "["
+def fmt_listlike(l: Any) -> str:
+    f: str = "["
     if len(l) > 0:
         for v in l:
             f += fmt(v)
@@ -25,8 +27,8 @@ def fmt_listlike(l) -> str:
     f += "]"
     return f
 
-def display_debug(surface: pg.Surface) :
-    i = 0
+def display_debug(surface: pg.Surface)  -> None:
+    i: int = 0
     for (key, value) in debug.items():
-        surface.blit(font.render(key + ": " + fmt(value), False, (255, 255, 255)), (x, y0 + i * font_size))
+        surface.blit(font.render(key + ": " + fmt(value), antialias, (255, 255, 255)), (x, y0 + i * font_size))
         i += 1

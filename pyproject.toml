@@ -23,6 +23,11 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/HanHollander/Pynkie"
 
+[tool.setuptools]
+include-package-data = true
+
 [tool.setuptools.packages.find]
-# All the following settings are optional:
 where = ["src"]
+
+[tool.setuptools.package-data]
+pynkie = ["**/*.pyi"]

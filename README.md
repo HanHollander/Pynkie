@@ -1,6 +1,20 @@
 # Pynkie
 Pygame extension
 
+## Type stub generation
+
+Dependencies
+```bash
+pip3 install mypy
+```
+
+Generate type stubs
+```bash
+stubgen src/pynkie -o stubs
+```
+Note: some manual tweaks may be needed
+
+
 ## Build
 
 Dependencies:
