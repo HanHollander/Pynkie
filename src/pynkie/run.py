@@ -3,36 +3,61 @@ from time import time
 
 import pynkie.events as events
 from pynkie.model import Model
-import pynkie.setup as setup
 import pynkie.debug as debug
 from pynkie.view import View
 
 class Pynkie:
 
-    def __init__(self, views: list[View], models: list[Model], event_listenters: dict[int, list[events.EventListener]],
-                 screen_width: int, screen_height: int, max_framerate: int, debug_info: bool, use_default_cursor: bool) -> None:
-        
-        self.views: list[View] = views
-        self.models: list[Model] = models
-        self.event_listenters: dict[int, list[events.EventListener]] = event_listenters
+    def __init__(self, screen_width: int, screen_height: int) -> None:
+        self.views: list[View] = []
+        self.models: list[Model] = []
+        self.event_listenters: dict[int, list[events.EventListener]] = {}
 
         self.screen_width: int = screen_width
         self.screen_height: int = screen_height
-        self.max_framerate: int = max_framerate
-        self.debug_info: bool = debug_info
-        self.use_default_cursor: bool = use_default_cursor
+        self.max_framerate: int = 60
+        self.debug_info: bool = False
+        self.use_default_cursor: bool = True
 
-        # setup mouse
         pg.mouse.set_visible(self.use_default_cursor)
 
-        # setup screen and clock
-        self.display = setup.setup_screen(self.screen_width, self.screen_height)
+        flags: int = pg.HWSURFACE | pg.DOUBLEBUF | pg.RESIZABLE
+        self.display: pg.Surface = pg.display.set_mode((self.screen_width, self.screen_height), flags, vsync=1)
+        pg.display.set_caption("pynkie project")
+        self.display.fill((0, 0, 0))
         self.clock = pg.time.Clock()
+
+    def set_max_framerate(self, max_framerate: int) -> None:
+        self.max_framerate = max_framerate
+
+    def set_debug_info(self, debug_info: bool) -> None:
+        self.debug_info = debug_info
+
+    def set_use_default_cursor(self, use_default_cursor: bool) -> None:
+        self.use_default_cursor = use_default_cursor
+
+    def add_view(self, view: View) -> None:
+        self.views.append(view)
+
+    def add_model(self, model: Model) -> None:
+        self.models.append(model)
+
+    def add_event_listener(self, event_type: int, event_listener: events.EventListener) -> None:
+        if event_type in self.event_listenters.keys():
+            self.event_listenters[event_type].append(event_listener)
+        else:
+            self.event_listenters[event_type] = [event_listener]
+
+    def add_event_listeners(self, event_type: int, event_listeners: list[events.EventListener]) -> None:
+        if event_type in self.event_listenters.keys():
+            for event_listener in event_listeners:
+                self.event_listenters[event_type].append(event_listener)
+        else:
+            self.event_listenters[event_type] = event_listeners
 
     def run(self) -> None:
         # run main loop
         self.main_loop()
-
 
     def main_loop(self, ) -> None:
         prev_time: float = time()
